@@ -13,16 +13,24 @@ namespace Bloco_de_notas
 {
     public partial class Form1 : Form
     {
+        //Fonte
+        private float tamanhoFonte;
+        private Font fonte;
+        private FontDialog fDialog = new FontDialog();
+        private ColorDialog corFonte = new ColorDialog();
+
+        //Arquivos
         private string nomeDoArquivo;
         private SaveFileDialog salvarArquivo = new SaveFileDialog();
         private OpenFileDialog abrirArquivo = new OpenFileDialog();
-        private FontDialog fDialog = new FontDialog();
-        private ColorDialog corFonte = new ColorDialog();
+
         public Form1(string name = "Sem titulo")
         {
 
             InitializeComponent();
             this.Text = name;
+
+            inicializaFonte();
            
         }
 
@@ -75,6 +83,7 @@ namespace Bloco_de_notas
             if(fDialog.ShowDialog() == DialogResult.OK)
             {
                 richTextBox1.Font = fDialog.Font;
+                fonte = fDialog.Font;
             }
         }
 
@@ -84,6 +93,33 @@ namespace Bloco_de_notas
             {
                 richTextBox1.ForeColor = corFonte.Color;
             }
+        }
+
+        private void aumentarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tamanhoFonte += 1;
+            Font f = new Font(fonte.Name, tamanhoFonte, fonte.Style,GraphicsUnit.Point);
+            richTextBox1.Font = f;
+        }
+
+
+        private void inicializaFonte()
+        {
+            //Pega a fonte usada como padrao na inicializacao
+            fonte = this.Font;
+            tamanhoFonte = fonte.Size;
+        }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void diminuirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tamanhoFonte -= 1;
+            Font f = new Font(fonte.Name, tamanhoFonte, fonte.Style, GraphicsUnit.Point);
+            richTextBox1.Font = f;
         }
     }
 }

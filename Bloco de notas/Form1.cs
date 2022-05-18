@@ -29,16 +29,15 @@ namespace Bloco_de_notas
 
             InitializeComponent();
             this.Text = name;
-
             inicializaFonte();
            
         }
 
+        //Arquivo
         private void novoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             abrirForm("Sem titulo",null);
         }
-
         private void salvarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(salvarArquivo.ShowDialog() == DialogResult.OK)
@@ -51,7 +50,6 @@ namespace Bloco_de_notas
 
             
         }
-
         private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (abrirArquivo.ShowDialog() == DialogResult.OK)
@@ -64,20 +62,20 @@ namespace Bloco_de_notas
                
             }
         }
-
         private void abrirForm(string nome,string texto)
         {
-
-            Form1 newFile = new Form1(nomeDoArquivo);
-            newFile.Show();
             if (texto != null || texto != "")
             {
-                newFile.richTextBox1.Text = texto;
+               //Define o nome da janela com o nome do arquivo
+               this.Text = nome;
+               //Joga o conteudo do arquivo para o richtextbox 
+               richTextBox1.Text = texto;
                
             }
            
         }
 
+        //Fonte 
         private void mudarFonteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(fDialog.ShowDialog() == DialogResult.OK)
@@ -86,7 +84,6 @@ namespace Bloco_de_notas
                 fonte = fDialog.Font;
             }
         }
-
         private void corDaFonteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(corFonte.ShowDialog() == DialogResult.OK)
@@ -94,15 +91,20 @@ namespace Bloco_de_notas
                 richTextBox1.ForeColor = corFonte.Color;
             }
         }
-
         private void aumentarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tamanhoFonte += 1;
             Font f = new Font(fonte.Name, tamanhoFonte, fonte.Style,GraphicsUnit.Point);
             richTextBox1.Font = f;
         }
+        private void diminuirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tamanhoFonte -= 1;
+            Font f = new Font(fonte.Name, tamanhoFonte, fonte.Style, GraphicsUnit.Point);
+            richTextBox1.Font = f;
+        }
 
-
+        //Metodo auxiliar para não "sujar" o metodo construtor do form
         private void inicializaFonte()
         {
             //Pega a fonte usada como padrao na inicializacao
@@ -115,11 +117,6 @@ namespace Bloco_de_notas
             Close();
         }
 
-        private void diminuirToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            tamanhoFonte -= 1;
-            Font f = new Font(fonte.Name, tamanhoFonte, fonte.Style, GraphicsUnit.Point);
-            richTextBox1.Font = f;
-        }
+        
     }
 }
